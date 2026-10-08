@@ -34,10 +34,7 @@ namespace DataLogicLibrary.Services
 
         public StatusDTO PerformAction(int userInput, StatusDTO currentStatus)
         {
-            if (userInput == 6)
-                return currentStatus;
-
-            switch (userInput)
+             switch (userInput)
             {
                 case 1:
                     _directionContext.SetStrategy(_turnLeftStrategy);
