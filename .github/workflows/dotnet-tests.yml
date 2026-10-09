@@ -4,6 +4,7 @@ name: .NET Unit Tests
 on:
   push:
     branches:
+      - main
       - feature/add-tests
   pull_request:
     branches:
