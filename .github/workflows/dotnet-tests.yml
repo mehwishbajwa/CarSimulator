@@ -4,10 +4,15 @@ name: .NET Unit Tests
 on:
   push:
     branches:
+      - main
+      - feature/github-actions-tests
       - feature/add-tests
+
   pull_request:
     branches:
       - main
+
+  workflow_dispatch:
 
 jobs:
   test:
