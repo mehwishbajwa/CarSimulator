@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -13,9 +14,12 @@ namespace DataLogicLibrary.Services
 {
     public class SimulationLogicService : ISimulationLogicService
     {
-        public delegate IDirectionStrategy DirectionStrategyResolver(MovementAction movementAction);
+        public delegate IDirectionStrategy DirectionStrategyResolver(
+            MovementAction movementAction);
 
-        public SimulationLogicService(IDirectionContext directionContext, DirectionStrategyResolver directionStrategyResolver)
+        public SimulationLogicService(
+            IDirectionContext directionContext,
+            DirectionStrategyResolver directionStrategyResolver)
         {
             _directionContext = directionContext;
             _turnLeftStrategy = directionStrategyResolver(MovementAction.Left);
@@ -29,12 +33,10 @@ namespace DataLogicLibrary.Services
         private readonly IDirectionStrategy _turnRightStrategy;
         private readonly IDirectionStrategy _driveForwardStrategy;
         private readonly IDirectionStrategy _reverseStrategy;
-        
-
 
         public StatusDTO PerformAction(int userInput, StatusDTO currentStatus)
         {
-             switch (userInput)
+            switch (userInput)
             {
                 case 1:
                     _directionContext.SetStrategy(_turnLeftStrategy);
@@ -55,21 +57,22 @@ namespace DataLogicLibrary.Services
                 case 5:
                     currentStatus.EnergyValue = 20;
                     return currentStatus;
+
                 case 6:
                     currentStatus.GasValue = 20;
                     return currentStatus;
-
             }
 
             currentStatus = _directionContext.ExecuteStrategy(currentStatus);
             return currentStatus;
-
         }
 
-        public StatusDTO DecreaseStatusValues(int userInput, StatusDTO currentStatus)
+        public StatusDTO DecreaseStatusValues(
+            int userInput,
+            StatusDTO currentStatus)
         {
-
             Random random = new Random();
+
             int energyDecrease = random.Next(1, 6);
             int gasDecrease = random.Next(1, 6);
 
@@ -87,11 +90,7 @@ namespace DataLogicLibrary.Services
                 currentStatus.GasValue = 0;
 
             return currentStatus;
-
         }
-
- 
-
-
     }
 }
+
