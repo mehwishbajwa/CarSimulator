@@ -62,6 +62,15 @@ Evidence can be provided through screenshots of:
 3. The running CarSimulator homepage in the browser.
 4. GitHub Actions deployment workflow and successful deployment run, if verified.
 
+
+## Evidence – Running Azure Website
+
+The CarSimulator application is hosted on Microsoft Azure App Service.
+
+The screenshot below shows the CarSimulator homepage successfully loading from the Azure website URL.
+
+![CarSimulator running on Azure](images/azure-website-running.png)
+  
 ## Conclusion
 
 The CarSimulator application has been published to a publicly accessible Azure App Service website.
