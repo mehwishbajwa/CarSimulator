@@ -14,19 +14,13 @@ The objective of this task is to demonstrate how Git and GitHub can be used to c
 
 ## Changes Made
 
-I selected commit `f5741c0`, titled "Add unit tests and fix simulation gas refill logic."
-
-This commit contains changes to four files, with 268 lines added and 17 lines removed.
-
-I examined the changes in `SimulationLogicService.cs`.
-
-### 1. Code Formatting Improvements
+ 1. Code Formatting Improvements
 
 Some long code statements, including the `DirectionStrategyResolver` delegate and the constructor, were divided into multiple lines.
 
 These changes improve readability and make the code easier to maintain.
 
-### 2. Changes to Simulation Logic
+2. Changes to Simulation Logic
 
 In the `PerformAction()` method, the following code was removed:
 
@@ -39,7 +33,7 @@ Previously, the method immediately returned the current status when the user sel
 
 Removing this early return allows the input to continue to the switch statement, where different simulation actions are handled.
 
-### 3. Comparing Versions Using GitHub
+3. Comparing Versions Using GitHub
 
 GitHub provides a visual comparison between the previous and updated versions of the source code.
 
