@@ -70,6 +70,23 @@ The CarSimulator application is hosted on Microsoft Azure App Service.
 The screenshot below shows the CarSimulator homepage successfully loading from the Azure website URL.
 
 ![CarSimulator running on Azure](images/azure-website-running.png)
+
+  
+### Functional Verification – Car Simulation
+
+The deployed CarSimulator application was tested through the Azure website.
+
+The "Drive Forward" action was executed successfully.
+
+Observed results:
+- Car status changed from stationary to driving forward.
+- Gas decreased from 20 to 18.
+- Energy decreased from 20 to 17.
+- Direction remained North.
+
+This confirms that the deployed application responds to user actions and updates the simulation state.
+
+![CarSimulator functional test on Azure](images/azure-simulation-working.png)
   
 ## Conclusion
 
