@@ -91,3 +91,19 @@ Additional assignment documentation is stored in the `docs` folder.
 ## Project Repository
 
 https://github.com/mehwishbajwa/CarSimulator
+
+## DevOps Assignment – Assessment Documentation
+
+The following documentation provides evidence for the DevOps assignment criteria G1–G10.
+
+
+G1 – Version Comparison  [G1 Documentation](docs/G1-Version-Comparison.md) 
+G2 – Gitflow  [G2 Documentation](docs/G2-Gitflow.md) 
+G3 – Application Configuration  [G3 Documentation](docs/G3-Application-Configuration.md) 
+G4 – Azure Deployment  [G4 Documentation](docs/G4-Azure-Deployment.md)
+G5 – GitHub Actions Testing  [G5 Documentation](docs/G5-GitHub-Actions-Testing.md) 
+G6 – Continuous Deployment  [G6 Documentation](docs/G6-Continuous-Deployment.md) 
+G7 – ARM Deployment  [G7 Documentation](docs/G7-arm-deployment.md) 
+G8 – Monitoring and Logging  [G8 Documentation](docs/G8-Monitoring-Logging.md) 
+G9 – IP Restrictions  [G9 Documentation](docs/G9-IP-Restriction.md) 
+G10 – Azure SQL Firewal  [G10 Documentation](docs/G10-Azure-SQL-Firewall.md) 
