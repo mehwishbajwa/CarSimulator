@@ -6,9 +6,11 @@ CarSimulator is an ASP.NET Core web application developed with C# and .NET 9. It
 
 The project demonstrates Git version control, Gitflow, automated unit testing, GitHub Actions CI/CD, Azure App Service deployment, and Azure infrastructure and security configuration.
 
-**Repository:** [CarSimulator on GitHub](https://github.com/mehwishbajwa/CarSimulator)  
-**Working branch:** [`develop`](https://github.com/mehwishbajwa/CarSimulator/tree/develop)  
-**Live application:** [CarSimulator on Azure App Service](https://mehwish-carsimulator-acdnbwefemcsbpgc.francecentral-01.azurewebsites.net)
+**Repository:** [CarSimulator on GitHub](https://github.com/mehwishbajwa/CarSimulator)
+
+**Working branch:** [develop](https://github.com/mehwishbajwa/CarSimulator/tree/develop)
+
+**Live application:** [CarSimulator on Azure App Service](https://mehwish-carsimulator-acdnbwefemcsbpgc.francecentral-01.azurewebsites.net/)
 
 ## Technologies
 
@@ -18,106 +20,180 @@ The project demonstrates Git version control, Gitflow, automated unit testing, G
 - GitHub Actions
 - Automated .NET unit testing
 - Microsoft Azure App Service
-- Azure Resource Manager (ARM), Azure monitoring, IP restrictions, and Azure SQL firewall configuration (documented in G7–G10)
+- Azure Resource Manager (ARM)
+- Azure monitoring and logging
+- Azure App Service IP restrictions
+- Azure SQL firewall configuration
 
 ## Repository Structure
 
--CarSimulatorApp.sln                         .NET solution 
--CarSimulator.Server/                         Web application 
--DataLogicLibrary.Tests/                      Unit tests 
--.github/workflows/azure-deploy.yml           Build, test, publish, and deploy workflow 
--docs/  G1–G10 assessment documentation 
--docs/images/                                 Supporting screenshots and evidence 
+| Path | Description |
+|---|---|
+| `CarSimulatorApp.sln` | .NET solution |
+| `CarSimulator.Server/` | ASP.NET Core web application |
+| `DataLogicLibrary.Tests/` | Automated unit tests |
+| `.github/workflows/azure-deploy.yml` | Build, test, publish, and deploy workflow |
+| `docs/` | G1–G10 assessment documentation |
+| `docs/images/` | Supporting screenshots and evidence |
 
 ## Prerequisites
 
 - .NET 9 SDK
 - Git
-- An Azure App Service deployment requires the appropriate Azure permissions and GitHub Actions secrets.
+- Appropriate Azure permissions for deployment
+- GitHub Actions repository secrets for Azure authentication
 
 ## Build and Test Locally
 
-From the repository root:
+From the repository root, restore dependencies, build the solution, and run unit tests.
 
-dotnet restore CarSimulatorApp.sln
-dotnet build CarSimulatorApp.sln --configuration Release --no-restore
-dotnet test DataLogicLibrary.Tests/DataLogicLibrary.Tests.csproj --configuration Release
+**Restore dependencies:**
 
-To run the web application locally:
+`dotnet restore CarSimulatorApp.sln`
 
-dotnet run --project CarSimulator.Server/CarSimulator.Server.csproj
+**Build the solution:**
 
-The local URL is printed in the terminal when the application starts. Any environment-specific configuration must be supplied through the appropriate application settings or environment variables.
+`dotnet build CarSimulatorApp.sln --configuration Release --no-restore`
+
+**Run automated unit tests:**
+
+`dotnet test DataLogicLibrary.Tests/DataLogicLibrary.Tests.csproj --configuration Release`
+
+**Run the web application locally:**
+
+`dotnet run --project CarSimulator.Server/CarSimulator.Server.csproj`
+
+The local application URL is displayed in the terminal when the application starts. Environment-specific configuration can be provided through application settings or environment variables.
 
 ## Branch Strategy (G2)
 
-- main — main project branch.
-- develop — integration branch and automatic CI/CD deployment trigger.
-- feature/add-tests — unit test development.
-- feature/github-actions-tests — earlier workflow and Azure deployment configuration work.
+The project follows a Gitflow-inspired branching strategy.
 
-Changes are tracked using Git commits and pull requests. See [G2 – Gitflow](docs/G2-Gitflow.md).
+- `main` – Main project branch.
+- `develop` – Integration branch and automatic CI/CD deployment trigger.
+- `feature/add-tests` – Unit test development.
+- `feature/github-actions-tests` – Earlier GitHub Actions and Azure deployment configuration work.
+
+Git commits and pull requests are used to track development changes.
+
+See [G2 – Gitflow Documentation](docs/G2-Gitflow.md).
 
 ## Application Configuration (G3)
 
-- `CarSimulator.Server/appsettings.json` contains general application configuration.
-- `CarSimulator.Server/appsettings.Development.json` contains development-specific configuration.
-- Environment variables and Azure App Service application settings can override configuration without editing source code.
-- GitHub Actions secrets provide the Azure identity identifiers used by the deployment workflow.
-- Sensitive passwords, access tokens, and connection strings must not be committed to source control.
+The application uses several approaches to manage configuration.
 
-See [G3 – Application Configuration](docs/G3-Application-Configuration.md).
+- `CarSimulator.Server/appsettings.json` contains general application settings.
+- `CarSimulator.Server/appsettings.Development.json` contains development-specific settings.
+- Environment variables can override application configuration.
+- Azure App Service application settings allow configuration without modifying source code.
+- GitHub Actions repository secrets store the Azure identity identifiers used by the deployment workflow.
+
+Sensitive information, including passwords, authentication tokens, and database connection strings, should not be committed to the repository.
+
+See [G3 – Application Configuration Documentation](docs/G3-Application-Configuration.md).
 
 ## Continuous Integration and Deployment (G5–G6)
 
-The GitHub Actions workflow [`.github/workflows/azure-deploy.yml`](.github/workflows/azure-deploy.yml) runs automatically on pushes to `develop`. It can also be started manually.
+The GitHub Actions workflow [`azure-deploy.yml`](.github/workflows/azure-deploy.yml) runs automatically when changes are pushed to `develop`. It also supports manual execution.
 
-The workflow performs the following stages:
+### CI/CD Pipeline Process
 
-1. Check out the repository and install the .NET 9 SDK.
-2. Restore dependencies and build the solution in Release mode.
-3. Run automated unit tests from `DataLogicLibrary.Tests`.
-4. Publish the `CarSimulator.Server` application.
-5. Upload the published application as a GitHub Actions artifact.
-6. Authenticate to Azure using OpenID Connect (OIDC) and deploy to Azure App Service.
+1. Check out the repository and configure the .NET 9 SDK.
+2. Restore project dependencies.
+3. Build the .NET solution in Release mode.
+4. Execute automated unit tests from `DataLogicLibrary.Tests`.
+5. Publish the `CarSimulator.Server` web application.
+6. Upload the published application as a deployment artifact.
+7. Authenticate to Azure using OpenID Connect (OIDC).
+8. Deploy the published application to Azure App Service.
 
-The deployment job depends on the successful completion of the build-and-test job. If build or tests fail, the deployment job does not proceed.
+The deployment job depends on the successful completion of the build-and-test job. If the build or tests fail, deployment does not proceed.
 
-**Verified result:** GitHub Actions run **#8** was automatically triggered by a push to `develop` and completed successfully, including deployment. A separate unit-test workflow also completed successfully.
+### Verified CI/CD Results
 
-(https://github.com/mehwishbajwa/CarSimulator/actions)
+GitHub Actions run **#8** was automatically triggered by a push to the `develop` branch and completed successfully.
 
-For screenshots and details, see [G5 – GitHub Actions Testing](docs/G5-GitHub-Actions-Testing.md) and [G6 – Continuous Deployment](docs/G6-Continuous-Deployment.md).
+Both jobs completed successfully:
 
+- `build-and-test` – Successful.
+- `deploy` – Successful.
+
+A separate .NET unit testing workflow also completed successfully.
+
+[View GitHub Actions Workflow Runs](https://github.com/mehwishbajwa/CarSimulator/actions)
+
+### CI/CD Success Evidence
 
 ![Successful automatic CI/CD pipeline](docs/images/G6-CICD-automatic-success.png)
 
+Additional documentation and evidence:
+
+- [G5 – GitHub Actions Testing](docs/G5-GitHub-Actions-Testing.md)
+- [G6 – Continuous Deployment](docs/G6-Continuous-Deployment.md)
 
 ## Azure Deployment (G4)
 
-CarSimulator is deployed to the Azure App Service named `mehwish-carsimulator`, hosted in the France Central region. The deployment pipeline publishes the web application and deploys the resulting files to the App Service.
+CarSimulator is deployed to Microsoft Azure App Service.
 
-**Live website:** [Open CarSimulator](https://mehwish-carsimulator-acdnbwefemcsbpgc.francecentral-01.azurewebsites.net)
+**Azure configuration:**
 
-Azure uses a generated hostname that includes a suffix; the shorter `mehwish-carsimulator.azurewebsites.net` address is not the confirmed website address.
+| Property | Value |
+|---|---|
+| Application name | `mehwish-carsimulator` |
+| Resource group | `CarSimulator-RG` |
+| Region | France Central |
+| Runtime | .NET 9 |
+| Operating system | Windows |
+| Deployment platform | GitHub Actions |
+| Deployment branch | `develop` |
+| Authentication | Azure OIDC federated credentials |
 
-See [G4 – Azure Deployment](docs/G4-Azure-Deployment.md).
+**Live application:**
+
+[Open CarSimulator on Azure](https://mehwish-carsimulator-acdnbwefemcsbpgc.francecentral-01.azurewebsites.net/)
+
+The application uses an Azure-generated hostname containing a regional suffix. The shorter `mehwish-carsimulator.azurewebsites.net` address is not the confirmed application URL.
+
+See [G4 – Azure Deployment Documentation](docs/G4-Azure-Deployment.md).
 
 ## Infrastructure, Security, and Monitoring (G7–G10)
 
-The assignment documentation includes evidence and explanations of:
+The project includes documentation and evidence covering Azure infrastructure and security.
 
-- **G7:** Azure Resource Manager (ARM) deployment.
-- **G8:** Monitoring and logging.
-- **G9:** App Service IP restrictions.
-- **G10:** Azure SQL firewall configuration.
+**G7 – Azure Resource Manager (ARM)**
 
-See the individual documentation files below for the exact configuration, screenshots, and results. These documented Azure configurations are distinct from container deployment; this README does not claim that CarSimulator is deployed as a container.
+Documents the Azure Resource Manager deployment process and related evidence.
 
-For infrastructure security, Azure access controls, firewall rules, IP restrictions, and secret handling help limit unauthorized access. Azure resources should remain available during grading, and their cost should be monitored.
+**G8 – Monitoring and Logging**
 
-## DevOps Assignment – G1–G10 Evidence
+Documents Azure monitoring and logging features used to observe the deployed application.
 
+**G9 – IP Restrictions**
+
+Documents Azure App Service access restrictions and their configuration.
+
+**G10 – Azure SQL Firewall**
+
+Documents Azure SQL firewall configuration and supporting evidence.
+
+### Infrastructure Security
+
+The project explores infrastructure security practices, including:
+
+- Azure role-based access control.
+- Azure managed identity and OIDC authentication.
+- GitHub Actions secret management.
+- Azure App Service IP restrictions.
+- Azure SQL firewall rules.
+- Monitoring and logging.
+
+### Container Deployment
+
+The current CarSimulator application is deployed directly to Azure App Service as a published .NET application, not as a container image.
+
+Container-based deployment is a separate deployment approach in which an application and its dependencies are packaged into a container image and deployed through a container-compatible hosting service.
+
+The documented Azure configurations demonstrate App Service deployment and infrastructure security without claiming that a container deployment has been implemented.
 
 ## DevOps Assignment – G1–G10 Evidence
 
@@ -133,11 +209,14 @@ For infrastructure security, Azure access controls, firewall rules, IP restricti
 | G8 – Monitoring and Logging | [G8 Documentation](docs/G8-Monitoring-Logging.md) |
 | G9 – IP Restrictions | [G9 Documentation](docs/G9-IP-Restriction.md) |
 | G10 – Azure SQL Firewall | [G10 Documentation](docs/G10-Azure-SQL-Firewall.md) |
-Supporting screenshots are stored in [`docs/images/`](docs/images/).
+
+Supporting screenshots and evidence are stored in the [`docs/images/`](docs/images/) directory.
 
 ## Submission Notes
 
-- The submitted branch is `develop`, where the G1–G10 documentation and successful CI/CD workflow are maintained.
-- The repository must be accessible to the assessor.
+- The assignment is submitted using the `develop` branch, where the assessment documentation and successful CI/CD workflow are maintained.
+- The repository must be accessible to the course assessor.
 - The Azure application and relevant resources should remain available until grading is complete.
-- No passwords, tokens, or sensitive connection strings should be included in the submission.
+- No passwords, authentication tokens, or sensitive connection strings should be included in the submission.
+
+**Repository for submission:** [CarSimulator – develop branch](https://github.com/mehwishbajwa/CarSimulator/tree/develop)
